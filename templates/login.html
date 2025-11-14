@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 2rem auto;">
+    <h1 style="color: var(--orange); text-align: center; margin-bottom: 2rem;">Login</h1>
+    
+    <form method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        
+        <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <p>Don't have an account? <a href="{{ url_for('register') }}" style="color: var(--orange);">Register here</a></p>
+    </div>
+</div>
+{% endblock %}

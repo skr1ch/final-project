@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Sustainability - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="color: var(--green); margin-bottom: 2rem;">Sustainability Score</h1>
+    
+    <div class="grid grid-2">
+        <!-- Score Display -->
+        <div class="fade-in" style="text-align: center;">
+            <div class="score-circle">
+                <div class="score-text">{{ sustainability_score }}</div>
+            </div>
+            <h3 style="margin-top: 1rem; color: var(--orange);">
+                {% if sustainability_score >= 90 %}
+                🌟 Excellent!
+                {% elif sustainability_score >= 80 %}
+                👍 Great Job!
+                {% elif sustainability_score >= 70 %}
+                💪 Good Progress!
+                {% elif sustainability_score >= 60 %}
+                📈 Getting Better!
+                {% else %}
+                🌱 Room for Improvement
+                {% endif %}
+            </h3>
+            <p style="margin-top: 1rem;">
+                Your wardrobe sustainability score based on fabric choices, care habits, and usage patterns.
+            </p>
+        </div>
+        
+        <!-- Improvement Tips -->
+        <div class="fade-in">
+            <h3 style="color: var(--light-blue); margin-bottom: 1rem;">💡 Improvement Tips</h3>
+            
+            {% if sustainability_score < 80 %}
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; margin-bottom: 1rem;">
+                <h4 style="color: var(--orange); margin-bottom: 1rem;">Quick Wins</h4>
+                <ul style="line-height: 2;">
+                    <li>Wash clothes in cold water</li>
+                    <li>Air dry instead of machine drying</li>
+                    <li>Repair instead of replacing</li>
+                    <li>Choose natural, organic fabrics</li>
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div style="background: rgba(56, 161, 105, 0.2); padding: 1.5rem; border-radius: 8px;">
+                <h4 style="color: var(--green); margin-bottom: 1rem;">🌍 Environmental Impact</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem;">💧</div>
+                        <div style="font-weight: bold;">Water Saved</div>
+                        <div>{{ (sustainability_score * 2.5)|round }}L</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem;">⚡</div>
+                        <div style="font-weight: bold;">Energy Saved</div>
+                        <div>{{ (sustainability_score * 1.8)|round }}kWh</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sustainability Facts -->
+    <div class="fade-in" style="margin-top: 2rem;">
+        <h3 style="color: var(--orange); margin-bottom: 1rem;">📊 Sustainability Facts</h3>
+        <div class="grid grid-3">
+            <div style="text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">👕</div>
+                <h4>Clothing Lifespan</h4>
+                <p>Extending clothing life by 9 months reduces carbon footprint by 20-30%</p>
+            </div>
+            
+            <div style="text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">💧</div>
+                <h4>Water Savings</h4>
+                <p>Washing at 30°C uses 40% less energy than washing at 40°C</p>
+            </div>
+            
+            <div style="text-align: center; padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                <div style="font-size: 2rem; margin-bottom: 1rem;">🌱</div>
+                <h4>Fabric Impact</h4>
+                <p>Organic cotton uses 91% less water than conventional cotton</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Initialize the sustainability score circle
+document.addEventListener('DOMContentLoaded', function() {
+    const score = {{ sustainability_score }};
+    const circle = document.querySelector('.score-circle');
+    const percent = (score / 100) * 360;
+    circle.style.setProperty('--score-percent', `${percent}deg`);
+});
+</script>
+{% endblock %}

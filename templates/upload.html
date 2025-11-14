@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}Add Clothing - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="color: var(--orange); margin-bottom: 2rem;">Add New Clothing Item</h1>
+    
+    <form method="POST" enctype="multipart/form-data" onsubmit="showUploadLoading()">
+        <!-- Hidden fields for captured images -->
+        <input type="hidden" id="cloth_image_data" name="cloth_image_data">
+        <input type="hidden" id="care_label_image_data" name="care_label_image_data">
+        
+        <div class="grid grid-2">
+            <!-- Basic Information -->
+            <div>
+                <h3 style="color: var(--light-blue); margin-bottom: 1rem;">Basic Information</h3>
+                
+                <div class="form-group">
+                    <label for="cloth_name">Clothing Name</label>
+                    <input type="text" class="form-control" id="cloth_name" name="cloth_name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" name="category" required style="color: white; background: var(--dark-blue);">
+                        <option value="" style="color: var(--light-gray); background: var(--dark-blue);">Select Category</option>
+                        <option value="Top" style="color: var(--orange); background: var(--dark-blue);">👕 Top</option>
+                        <option value="Bottom" style="color: var(--green); background: var(--dark-blue);">👖 Bottom</option>
+                        <option value="OverTop" style="color: var(--light-blue); background: var(--dark-blue);">🧥 Over Top</option>
+                        
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <select class="form-control" id="color" name="color" required style="color: white; background: var(--dark-blue);">
+                        <option value="" style="color: var(--light-gray); background: var(--dark-blue);">Select Color</option>
+                        <option value="Red" style="color: #ff6b6b; background: var(--dark-blue);">🔴 Red</option>
+                        <option value="Blue" style="color: #4dabf7; background: var(--dark-blue);">🔵 Blue</option>
+                        <option value="Green" style="color: #51cf66; background: var(--dark-blue);">🟢 Green</option>
+                        <option value="Yellow" style="color: #ffd43b; background: var(--dark-blue);">🟡 Yellow</option>
+                        <option value="Black" style="color: #adb5bd; background: var(--dark-blue);">⚫ Black</option>
+                        <option value="White" style="color: #f8f9fa; background: var(--dark-blue);">⚪ White</option>
+                        <option value="Gray" style="color: #ced4da; background: var(--dark-blue);">🔘 Gray</option>
+                        <option value="Purple" style="color: #cc5de8; background: var(--dark-blue);">🟣 Purple</option>
+                        <option value="Pink" style="color: #f783ac; background: var(--dark-blue);">💖 Pink</option>
+                        <option value="Orange" style="color: #ffa94d; background: var(--dark-blue);">🟠 Orange</option>
+                        <option value="Brown" style="color: #dda15e; background: var(--dark-blue);">🟤 Brown</option>
+                        <option value="Multi-color" style="color: linear-gradient(45deg, #ff6b6b, #4dabf7, #51cf66); background: var(--dark-blue);">🌈 Multi-color</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="weather_conditions">Suitable Weather</label>
+                    <select class="form-control" id="weather_conditions" name="weather_conditions" required style="color: white; background: var(--dark-blue);">
+                        <option value="" style="color: var(--light-gray); background: var(--dark-blue);">Select Weather</option>
+                        <option value="Hot" style="color: #ff6b6b; background: var(--dark-blue);">☀️ Hot</option>
+                        <option value="Warm" style="color: #ffa94d; background: var(--dark-blue);">🌤️ Warm</option>
+                        <option value="Cool" style="color: #4dabf7; background: var(--dark-blue);">🌥️ Cool</option>
+                        <option value="Cold" style="color: #74c0fc; background: var(--dark-blue);">❄️ Cold</option>
+                        <option value="All" style="color: #51cf66; background: var(--dark-blue);">🌈 All Weather</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Image Capture -->
+            <div>
+                <h3 style="color: var(--green); margin-bottom: 1rem;">Capture Images</h3>
+                
+                <!-- Clothing Image Capture -->
+                <div class="form-group">
+                    <label>Clothing Image</label>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button type="button" class="btn" onclick="openCamera('cloth')" style="flex: 1;">
+                            📸 Capture Clothing
+                        </button>
+                    </div>
+                    <img id="clothPreview" style="max-width: 200px; max-height: 200px; margin-top: 1rem; display: none; border-radius: 8px; border: 2px solid var(--orange);">
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--light-gray);">
+                        <small>💡 Press 'Q' to capture when camera is open</small>
+                    </div>
+                </div>
+                
+                <!-- Care Label Image Capture -->
+                <div class="form-group">
+                    <label>Care Label Image</label>
+                    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                        <button type="button" class="btn" onclick="openCamera('care')" style="flex: 1;">
+                            📋 Capture Care Label
+                        </button>
+                    </div>
+                    <img id="careLabelPreview" style="max-width: 200px; max-height: 200px; margin-top: 1rem; display: none; border-radius: 8px; border: 2px solid var(--green);">
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem; color: var(--light-gray);">
+                        <small>💡 Press 'Q' to capture when camera is open</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div style="background: rgba(56, 161, 105, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                        <small>📸 <strong>Pro Tip:</strong> Take clear photos in good lighting. For care labels, ensure text is readable. Press 'Q' to capture instantly!</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <button type="submit" class="btn" id="submitBtn" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                Add to Wardrobe
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Camera Modal -->
+<div id="cameraModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle">Capture Image</h3>
+            <span class="close" onclick="closeCamera()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <div style="background: rgba(237, 137, 54, 0.2); padding: 0.5rem; border-radius: 5px; margin-bottom: 1rem;">
+                    <small>🎯 <strong>Tip:</strong> Press 'Q' key to capture instantly!</small>
+                </div>
+            </div>
+            
+            <div style="position: relative; background: #000; border-radius: 8px; overflow: hidden;">
+                <video id="cameraVideo" autoplay playsinline style="width: 100%; max-width: 640px; display: none;"></video>
+                <canvas id="cameraCanvas" style="width: 100%; max-width: 640px; display: none;"></canvas>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                <button id="captureBtn" class="btn" onclick="captureImage()">
+                    Capture
+                </button>
+                <button id="retakeBtn" class="btn btn-secondary" onclick="retakePhoto()" style="display: none;">
+                    Retake
+                </button>
+                <button id="useBtn" class="btn" onclick="usePhoto()" style="display: none;">
+                    Use Photo
+                </button>
+                <button class="btn btn-secondary" onclick="closeCamera()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: var(--dark-blue);
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 700px;
+    border: 2px solid var(--orange);
+}
+
+.modal-header {
+    background: var(--medium-blue);
+    padding: 1rem 1.5rem;
+    border-radius: 15px 15px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: var(--orange);
+}
+
+.close {
+    color: var(--white);
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--orange);
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Style the dropdowns */
+.form-control {
+    color: white !important;
+    background: var(--dark-blue) !important;
+    border: 2px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.form-control option {
+    color: white !important;
+    background: var(--dark-blue) !important;
+    padding: 10px !important;
+}
+
+/* Custom scrollbar for dropdown */
+.form-control::-webkit-scrollbar {
+    width: 8px;
+}
+
+.form-control::-webkit-scrollbar-track {
+    background: var(--medium-blue);
+}
+
+.form-control::-webkit-scrollbar-thumb {
+    background: var(--orange);
+    border-radius: 4px;
+}
+
+.form-control::-webkit-scrollbar-thumb:hover {
+    background: var(--light-blue);
+}
+</style>
+
+<script>
+function showUploadLoading() {
+    const clothImage = document.getElementById('cloth_image_data').value;
+    const careImage = document.getElementById('care_label_image_data').value;
+    
+    if (!clothImage || !careImage) {
+        alert('Please capture both clothing image and care label image before submitting.');
+        event.preventDefault();
+        return;
+    }
+    
+    const btn = document.getElementById('submitBtn');
+    btn.innerHTML = '🔄 Processing with AI...';
+    btn.disabled = true;
+}
+
+// Add event listeners to enhance dropdown experience
+document.addEventListener('DOMContentLoaded', function() {
+    // Add focus effects to dropdowns
+    const dropdowns = document.querySelectorAll('select');
+    dropdowns.forEach(dropdown => {
+        dropdown.addEventListener('focus', function() {
+            this.style.borderColor = 'var(--orange)';
+            this.style.boxShadow = '0 0 10px rgba(237, 137, 54, 0.3)';
+        });
+        
+        dropdown.addEventListener('blur', function() {
+            this.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            this.style.boxShadow = 'none';
+        });
+        
+        dropdown.addEventListener('change', function() {
+            if (this.value) {
+                this.style.borderColor = 'var(--green)';
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

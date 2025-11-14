@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Outfit Recommendations - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="color: var(--orange); margin-bottom: 1rem;">AI-Powered Outfit Recommendations</h1>
+    
+    <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; flex-wrap: wrap;">
+        <label for="weatherSelect" style="font-weight: bold;">Weather Conditions:</label>
+        <select class="form-control" id="weatherSelect" onchange="updateWeatherRecommendations()" style="width: auto;">
+            <option value="Hot" {% if weather == 'Hot' %}selected{% endif %}>Hot</option>
+            <option value="Warm" {% if weather == 'Warm' %}selected{% endif %}>Warm</option>
+            <option value="Cool" {% if weather == 'Cool' %}selected{% endif %}>Cool</option>
+            <option value="Cold" {% if weather == 'Cold' %}selected{% endif %}>Cold</option>
+            <option value="Moderate" {% if weather == 'Moderate' %}selected{% endif %}>Moderate</option>
+        </select>
+        
+        <div style="margin-left: auto;">
+            <small style="color: var(--light-gray);">
+                🤖 Powered by AI & ML Clustering
+            </small>
+        </div>
+    </div>
+    
+    {% if recommendations %}
+    <div class="stats-grid" style="margin-bottom: 2rem;">
+        <div class="stat-card fade-in">
+            <span class="stat-number">{{ recommendations[0].wash_cluster }}</span>
+            <span class="stat-label">Wash Cluster</span>
+        </div>
+        <div class="stat-card fade-in">
+            <span class="stat-number">{{ recommendations|length }}</span>
+            <span class="stat-label">AI Recommendations</span>
+        </div>
+        <div class="stat-card fade-in">
+            <span class="stat-number">{{ recommendations|selectattr('has_real_image')|list|length }}</span>
+            <span class="stat-label">Real Images</span>
+        </div>
+    </div>
+    
+    <div class="clothing-grid">
+        {% for rec in recommendations %}
+        <div class="clothing-item fade-in">
+            {% if rec.image.startswith('data:image') %}
+            <!-- SVG Placeholder -->
+            <img src="{{ rec.image }}" alt="{{ rec.name }}" class="clothing-image">
+            {% else %}
+            <!-- Real Image -->
+            <img src="{{ url_for('static', filename=rec.image) }}" alt="{{ rec.name }}" class="clothing-image"
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMmM1MjgyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5JbWFnZSBOb3QgRm91bmQ8L3RleHQ+PC9zdmc+'">
+            {% endif %}
+            
+            <div class="clothing-info">
+                <div class="clothing-name">{{ rec.name }}</div>
+                <div class="clothing-details">
+                    <strong>ID:</strong> {{ rec.id }}<br>
+                    <strong>Category:</strong> {{ rec.category }}<br>
+                    <strong>Fabric:</strong> {{ rec.fabric }}<br>
+                    <strong>Color:</strong> {{ rec.color }}<br>
+                    <strong>Weather:</strong> {{ rec.weather }}<br>
+                    {% if rec.care_instructions %}
+                    <strong>Care:</strong> {{ rec.care_instructions }}<br>
+                    {% endif %}
+                    <strong>Wash Cluster:</strong> {{ rec.wash_cluster }}<br>
+                </div>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button onclick="showItemDetails('{{ rec.id }}')" class="btn" style="flex: 1; padding: 0.5rem;">
+                        View Details
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(56, 161, 105, 0.2); border-radius: 8px;">
+        <h4 style="color: var(--green); margin-bottom: 1rem;">💡 AI & ML Recommendation Insight</h4>
+        <p><strong>Wash Cluster {{ recommendations[0].wash_cluster }}:</strong> These items have similar care requirements and can be washed together.</p>
+        <p>The AI analyzed your uploaded clothing's fabric type, color, and care instructions to recommend complementary items from our dataset that match your style and maintenance needs.</p>
+        
+        {% if recommendations|selectattr('has_real_image')|list|length < recommendations|length %}
+        <div style="margin-top: 1rem; padding: 1rem; background: rgba(237, 137, 54, 0.2); border-radius: 6px;">
+            <small>💡 <strong>Note:</strong> Some images are placeholders. Make sure your image filenames match the cloth_ids (e.g., C001.jpg, C002.png)</small>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🤖</div>
+        <h3 style="color: var(--orange); margin-bottom: 1rem;">No recommendations yet!</h3>
+        <p style="margin-bottom: 2rem;">Add some clothing items to your wardrobe first to get personalized AI recommendations.</p>
+        <a href="{{ url_for('upload') }}" class="btn">Add Clothing Items</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function showItemDetails(itemId) {
+    alert('Item ID: ' + itemId + '\n\nThis item was recommended based on:\n• Similar fabric type and care requirements\n• Complementary colors and styles\n• Matching weather suitability\n• ML wash cluster grouping');
+}
+
+function updateWeatherRecommendations() {
+    const weatherSelect = document.getElementById('weatherSelect');
+    const weather = weatherSelect.value;
+    window.location.href = `/recommendations?weather=${weather}`;
+}
+</script>
+{% endblock %}

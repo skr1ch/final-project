@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <h1>{{ greeting }}, {{ session.username }}! 👋</h1>
+    <p>Here's your smart wardrobe overview</p>
+</div>
+
+<!-- Current Weather Banner -->
+<div class="card fade-in" style="background: linear-gradient(135deg, var(--light-blue), var(--medium-blue)); margin-bottom: 2rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+            <div style="font-size: 3rem;">
+                {% if current_weather.condition == 'Sunny' or current_weather.condition == 'Hot' %}☀️
+                {% elif current_weather.condition == 'Rainy' %}🌧️
+                {% elif current_weather.condition == 'Cloudy' or current_weather.condition == 'Partly Cloudy' %}☁️
+                {% elif current_weather.condition == 'Cool' or current_weather.condition == 'Cold' %}❄️
+                {% else %}🌤️{% endif %}
+            </div>
+            <div>
+                <h2 style="color: white; margin: 0;">Bangalore Weather</h2>
+                <p style="color: white; margin: 0; font-size: 1.2rem;">
+                    {{ current_weather.temperature }}°C • {{ current_weather.condition }} • {{ current_weather.humidity }}% humidity
+                </p>
+            </div>
+        </div>
+        <div style="text-align: right;">
+            <div style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px;">
+                <strong style="color: white;">{{ current_weather.recommendation }} Weather</strong>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card fade-in">
+        <span class="stat-number">{{ clothes_count }}</span>
+        <span class="stat-label">Total Items</span>
+    </div>
+    <div class="stat-card fade-in">
+        <span class="stat-number">{{ sustainability_score }}</span>
+        <span class="stat-label">Sustainability</span>
+    </div>
+    <div class="stat-card fade-in">
+        <span class="stat-number">{{ high_priority_count }}</span>
+        <span class="stat-label">Wash Now</span>
+    </div>
+    <div class="stat-card fade-in">
+        <span class="stat-number">{{ weather_recommendations|length }}</span>
+        <span class="stat-label">Today's Picks</span>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <!-- Today's Weather Recommendations -->
+    <div class="card fade-in">
+        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="color: var(--orange); margin: 0;">🎯 Today's Outfit Picks</h3>
+            <small style="color: var(--light-gray);">Based on current weather</small>
+        </div>
+        
+        {% if weather_recommendations %}
+            <div class="clothing-grid" style="grid-template-columns: 1fr;">
+                {% for cloth in weather_recommendations %}
+                <div class="clothing-item">
+                    {% if cloth.image %}
+                    <img src="{{ url_for('static', filename=cloth.image) }}" alt="{{ cloth.name }}" class="clothing-image"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMmM1MjgyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DbG90aGluZzwvdGV4dD48L3N2Zz4='">
+                    {% else %}
+                    <div class="clothing-image" style="background: var(--medium-blue); display: flex; align-items: center; justify-content: center;">
+                        <span>👕</span>
+                    </div>
+                    {% endif %}
+                    <div class="clothing-info">
+                        <div class="clothing-name">{{ cloth.name }}</div>
+                        <div class="clothing-details">
+                            <strong>ID:</strong> {{ cloth.id }}<br>
+                            <strong>Type:</strong> {{ cloth.category }}<br>
+                            <strong>Fabric:</strong> {{ cloth.fabric }}<br>
+                            <strong>Color:</strong> {{ cloth.color }}
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <button onclick="markAsWorn({{ cloth.id }})" class="btn" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">
+                                ✅ Mark as Worn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div style="text-align: center; padding: 2rem;">
+                <p>Add clothing items to get weather-based recommendations!</p>
+                <a href="{{ url_for('upload') }}" class="btn" style="margin-top: 1rem;">Add Clothing</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Laundry Alerts -->
+    <div class="card fade-in">
+        <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="color: var(--green); margin: 0;">🧺 Laundry Alerts</h3>
+            <small style="color: var(--light-gray);">{{ laundry_recommendations|length }} items need attention</small>
+        </div>
+        
+        {% if laundry_recommendations %}
+            <!-- High Priority Section -->
+            {% set high_priority = laundry_recommendations|selectattr('wash_priority', 'equalto', 'High')|list %}
+            {% if high_priority %}
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: #e53e3e; margin-bottom: 0.5rem;">🚨 Wash Now ({{ high_priority|length }})</h4>
+                {% for rec in high_priority %}
+                <div style="background: rgba(229, 62, 62, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong>{{ rec.cloth_name }}</strong>
+                            <br>
+                            <small>Worn: {{ rec.days_since_worn }} days ago</small>
+                            <br>
+                            <small>Fabric: {{ rec.fabric_type }}</small>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem;">
+                        <small>⚠️ {{ rec.priority_reason }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Medium Priority Section -->
+            {% set medium_priority = laundry_recommendations|selectattr('wash_priority', 'equalto', 'Medium')|list %}
+            {% if medium_priority %}
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: var(--light-blue); margin-bottom: 0.5rem;">⚠️ Soon ({{ medium_priority|length }})</h4>
+                {% for rec in medium_priority %}
+                <div style="background: rgba(49, 130, 206, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong>{{ rec.cloth_name }}</strong>
+                            <br>
+                            <small>Worn: {{ rec.days_since_worn }} days ago</small>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem;">
+                        <small>📅 {{ rec.priority_reason }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Low Priority Section -->
+            {% set low_priority = laundry_recommendations|selectattr('wash_priority', 'equalto', 'Low')|list %}
+            {% if low_priority %}
+            <div style="margin-bottom: 1.5rem;">
+                <h4 style="color: var(--green); margin-bottom: 0.5rem;">✅ Fresh ({{ low_priority|length }})</h4>
+                {% for rec in low_priority %}
+                <div style="background: rgba(56, 161, 105, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem;">
+                    <div style="display: flex; justify-content: between; align-items: start;">
+                        <div style="flex: 1;">
+                            <strong>{{ rec.cloth_name }}</strong>
+                            <br>
+                            <small>Worn: {{ rec.days_since_worn }} days ago</small>
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem; font-size: 0.8rem;">
+                        <small>🌿 {{ rec.priority_reason }}</small>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <a href="{{ url_for('laundry') }}" class="btn" style="width: 100%; text-align: center; margin-top: 1rem;">
+                View Full Laundry Schedule
+            </a>
+
+        {% else %}
+            <div style="text-align: center; padding: 2rem;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎉</div>
+                <p>All clothes are fresh!</p>
+                <small style="color: var(--light-gray);">No laundry needed right now</small>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- <div class="grid grid-2" style="margin-top: 2rem;"> -->
+    <!-- Quick Actions
+    <div class="card fade-in">
+        <h3 style="color: var(--light-blue); margin-bottom: 1rem;">Quick Actions</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <a href="{{ url_for('upload') }}" class="btn" style="text-align: center;">Add Clothing</a>
+            <a href="{{ url_for('wardrobe') }}" class="btn btn-secondary" style="text-align: center;">View Wardrobe</a>
+            <a href="{{ url_for('laundry') }}" class="btn btn-secondary" style="text-align: center;">Laundry</a>
+            <a href="{{ url_for('sustainability') }}" class="btn" style="text-align: center;">Sustainability</a>
+        </div>
+    </div> -->
+
+    <!-- Sustainability Score
+    <div class="card fade-in">
+        <h3 style="color: var(--green); margin-bottom: 1rem;">Your Sustainability Score</h3>
+        <div class="score-circle">
+            <div class="score-text">{{ sustainability_score }}</div>
+        </div>
+        <p style="text-align: center;">
+            {% if sustainability_score >= 80 %}
+            Excellent! You're maintaining a highly sustainable wardrobe! 🌟
+            {% elif sustainability_score >= 60 %}
+            Good job! You're on the right track to sustainability! 👍
+            {% else %}
+            Let's work on improving your wardrobe sustainability! 💪
+            {% endif %}
+        </p>
+    </div> -->
+<!-- </div> -->
+
+<script>
+function markAsWorn(clothId) {
+    console.log('Marking cloth as worn:', clothId);
+    
+    const button = document.querySelector(`button[onclick="markAsWorn(${clothId})"]`);
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '⏳ Updating...';
+    button.disabled = true;
+    
+    fetch('/api/mark_worn', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cloth_id: clothId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showNotification('Item marked as worn!', 'success');
+            button.innerHTML = '✅ Worn Today';
+            button.style.background = 'linear-gradient(45deg, #e53e3e, #c53030)';
+            
+            // Refresh the page after 2 seconds to update laundry status
+            setTimeout(() => {
+                location.reload();
+            }, 2000);
+        } else {
+            showNotification(data.error || 'Error marking item as worn', 'error');
+            button.innerHTML = originalText;
+            button.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Network error marking item as worn', 'error');
+        button.innerHTML = originalText;
+        button.disabled = false;
+    });
+}
+</script>
+{% endblock %}

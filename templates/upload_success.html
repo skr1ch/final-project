@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Successful - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+        <h1 style="color: var(--green);">Successfully Added {{ cloth_name }}!</h1>
+        <p>Your clothing item has been added to your wardrobe with AI-processed care instructions.</p>
+    </div>
+
+    <div class="grid grid-2">
+        <!-- Item Details -->
+        <div class="fade-in">
+            <h3 style="color: var(--orange); margin-bottom: 1rem;">📋 Item Details</h3>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                <p><strong>Name:</strong> {{ cloth_name }}</p>
+                <p><strong>Fabric Type:</strong> {{ fabric_type }}</p>
+                <p><strong>Weather Suitable:</strong> {{ weather_suitable }}</p>
+                <p><strong>Care Instructions:</strong> Extracted from care label</p>
+            </div>
+            
+            <div style="margin-top: 2rem;">
+                <a href="{{ url_for('upload') }}" class="btn" style="margin-right: 1rem;">
+                    ➕ Add Another Item
+                </a>
+                <a href="{{ url_for('wardrobe') }}" class="btn btn-secondary">
+                    👕 View My Wardrobe
+                </a>
+            </div>
+        </div>
+
+        <!-- Weather & Suggestions -->
+        <div class="fade-in">
+            <h3 style="color: var(--light-blue); margin-bottom: 1rem;">🌤️ Weather Context</h3>
+            <div style="background: rgba(56, 161, 105, 0.2); padding: 1.5rem; border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                    <div style="font-size: 2rem;">🌡️</div>
+                    <div>
+                        <strong>Current Bangalore Weather</strong><br>
+                        <small>{{ current_weather.temperature }}°C • {{ current_weather.condition }}</small>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 1rem;">
+                    <strong>🤖 AI Insight:</strong><br>
+                    <small>Your new "{{ cloth_name }}" is suitable for {{ weather_suitable }} weather. 
+                    Check the dashboard for today's outfit recommendations!</small>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem;">
+                <a href="{{ url_for('dashboard') }}" class="btn" style="width: 100%; text-align: center;">
+                    🎯 Get Today's Outfit Recommendations
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

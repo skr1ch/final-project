@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Wardrobe - Your Intelligent Clothing Manager{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="card text-center">
+        <h1 class="fade-in">Welcome to Smart Wardrobe</h1>
+        <p class="fade-in" style="margin: 1rem 0 2rem 0; font-size: 1.2rem;">
+            Your intelligent clothing management system powered by AI
+        </p>
+        
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <span class="stat-number">AI</span>
+                <span class="stat-label">Powered</span>
+            </div>
+            <div class="stat-card fade-in">
+                <span class="stat-number">Smart</span>
+                <span class="stat-label">Recommendations</span>
+            </div>
+            <div class="stat-card fade-in">
+                <span class="stat-number">Eco</span>
+                <span class="stat-label">Friendly</span>
+            </div>
+        </div>
+
+        <div class="grid grid-2" style="margin-top: 3rem;">
+            <div class="card fade-in">
+                <h3 style="color: var(--orange); margin-bottom: 1rem;">✨ Smart Features</h3>
+                <ul style="text-align: left; line-height: 2;">
+                    <li>AI-powered clothing recognition</li>
+                    <li>Automatic care label reading</li>
+                    <li>Personalized outfit recommendations</li>
+                    <li>Smart laundry tracking</li>
+                    <li>Sustainability scoring</li>
+                    <li>24/7 AI assistant</li>
+                </ul>
+            </div>
+            
+            <div class="card fade-in">
+                <h3 style="color: var(--green); margin-bottom: 1rem;">🚀 Get Started</h3>
+                <p style="margin-bottom: 2rem;">
+                    Join thousands of users who are managing their wardrobe intelligently and sustainably.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center;">
+                    <a href="{{ url_for('register') }}" class="btn">Start Free</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card fade-in" style="margin-top: 2rem;">
+            <h3 style="color: var(--light-blue); margin-bottom: 1rem;">How It Works</h3>
+            <div class="grid grid-3">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">📸</div>
+                    <h4>Upload Clothing</h4>
+                    <p>Take photos of your clothes and care labels</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🤖</div>
+                    <h4>AI Processing</h4>
+                    <p>Our AI extracts fabric info and care instructions</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">👕</div>
+                    <h4>Smart Management</h4>
+                    <p>Get recommendations and track laundry</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

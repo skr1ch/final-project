@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Wardrobe - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">Smart Wardrobe</div>
+                <ul class="nav-links">
+                    {% if session.user_id %}
+                        <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                        <li><a href="{{ url_for('upload') }}">Add Clothing</a></li>
+                        <li><a href="{{ url_for('wardrobe') }}">My Wardrobe</a></li>
+                        <!-- <li><a href="{{ url_for('recommendations') }}">Recommendations</a></li> -->
+                        <li><a href="{{ url_for('laundry') }}">Laundry</a></li>
+                        <li><a href="{{ url_for('sustainability') }}">Sustainability</a></li>
+                        <li><a href="{{ url_for('profile') }}">Profile</a></li>
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        <li>
+                            <a href="{{ url_for('notifications') }}">
+                                🔔 Notifications
+                            </a>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ url_for('index') }}">Home</a></li>
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Flash Messages -->
+    <div id="flashMessages" class="flash-messages">
+        <!-- Flash messages will be inserted here by JavaScript -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <!-- Chatbot Icon -->
+    {% if session.user_id %}
+    <div class="chatbot-icon" onclick="toggleChatbot()">
+        <span>💬</span>
+    </div>
+
+    <!-- Chatbot Window -->
+    <div id="chatbotWindow" class="chatbot-window">
+        <div class="chatbot-header">
+            <h3>Wardrobe Assistant</h3>
+            <span onclick="toggleChatbot()" style="cursor: pointer;">✕</span>
+        </div>
+        <div id="chatbotMessages" class="chatbot-messages">
+            <div class="message bot-message">
+                Hello! I'm your Smart Wardrobe assistant. How can I help you with your clothing and laundry today?
+            </div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="if(event.key=='Enter') sendMessage()">
+        </div>
+    </div>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

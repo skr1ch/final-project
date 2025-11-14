@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="color: var(--orange); margin-bottom: 2rem;">User Profile</h1>
+    
+    <div class="grid grid-2">
+        <!-- User Information -->
+        <div class="fade-in">
+            <h3 style="color: var(--light-blue); margin-bottom: 1rem;">Account Information</h3>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                <div style="margin-bottom: 1rem;">
+                    <strong>Username:</strong> {{ user.username }}
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <strong>Email:</strong> {{ user.email }}
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <strong>Member Since:</strong> {{ user.created_at[:10] }}
+                </div>
+                <div>
+                    <strong>Total Items:</strong> {{ clothes_count }} clothing items
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="fade-in">
+            <h3 style="color: var(--green); margin-bottom: 1rem;">Wardrobe Stats</h3>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; text-align: center;">
+                    <div>
+                        <div style="font-size: 2rem; color: var(--orange);">{{ clothes_count }}</div>
+                        <div>Total Items</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: var(--green);">
+                            {{ (recent_activity|selectattr('type', 'equalto', 'outfit_recommended')|list|length) }}
+                        </div>
+                        <div>Outfits Recommended</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Activity -->
+    <div class="fade-in" style="margin-top: 2rem;">
+        <h3 style="color: var(--orange); margin-bottom: 1rem;">Recent Activity</h3>
+        {% if recent_activity %}
+        <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+            {% for activity in recent_activity %}
+            <div style="display: flex; justify-content: between; align-items: center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <div>
+                    {% if activity.type == 'cloth_added' %}
+                    <span style="color: var(--green);">🆕</span>
+                    Added "{{ activity.description }}"
+                    {% else %}
+                    <span style="color: var(--light-blue);">🤖</span>
+                    Outfit recommended for {{ activity.description }} weather
+                    {% endif %}
+                </div>
+                <small style="color: var(--light-gray);">
+                    {{ activity.timestamp[:10] }}
+                </small>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+            No recent activity. Start by adding some clothing items!
+        </p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

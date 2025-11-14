@@ -1,0 +1,201 @@
+cloth_id,fabric_type,color,wash_temperature,wash_cycle_type,detergent_type,drying_method
+C001,Denim,Black,Warm,Hand,Mild,Tumble
+C002,Linen,Grey,Cold,Hand,Mild,Tumble
+C003,Denim,Blue,Warm,Hand,Wool Detergent,Air Dry
+C004,Denim,Beige,Cold,Gentle,Wool Detergent,Air Dry
+C005,Denim,Black,Cold,Hand,Wool Detergent,Air Dry
+C006,Cotton,Grey,Cold,Normal,Wool Detergent,Air Dry
+C007,Linen,Grey,Warm,Normal,Mild,Tumble
+C008,Linen,Black,Cold,Normal,Mild,Air Dry
+C009,Linen,White,Cold,Gentle,Wool Detergent,Tumble
+C010,Wool,White,Warm,Normal,Wool Detergent,Tumble
+C011,Denim,White,Warm,Gentle,Wool Detergent,Air Dry
+C012,Wool,Grey,Warm,Normal,Wool Detergent,Air Dry
+C013,Denim,Black,Cold,Normal,Mild,Air Dry
+C014,Cotton,Black,Warm,Hand,Wool Detergent,Tumble
+C015,Polyester,Beige,Cold,Hand,Mild,Tumble
+C016,Linen,Red,Warm,Normal,Mild,Tumble
+C017,Polyester,Grey,Cold,Hand,Mild,Air Dry
+C018,Denim,Grey,Cold,Normal,Wool Detergent,Air Dry
+C019,Wool,Black,Cold,Normal,Wool Detergent,Air Dry
+C020,Linen,Blue,Warm,Hand,Wool Detergent,Air Dry
+C021,Linen,Black,Warm,Hand,Mild,Tumble
+C022,Linen,Red,Warm,Hand,Mild,Air Dry
+C023,Polyester,Red,Warm,Hand,Wool Detergent,Air Dry
+C024,Wool,Beige,Cold,Gentle,Wool Detergent,Air Dry
+C025,Denim,Beige,Warm,Normal,Mild,Air Dry
+C026,Denim,Red,Cold,Normal,Mild,Air Dry
+C027,Wool,Grey,Warm,Normal,Mild,Air Dry
+C028,Cotton,Blue,Warm,Normal,Wool Detergent,Air Dry
+C029,Cotton,Red,Cold,Hand,Mild,Tumble
+C030,Linen,Red,Warm,Gentle,Mild,Tumble
+C031,Denim,Black,Cold,Hand,Wool Detergent,Air Dry
+C032,Linen,Black,Warm,Hand,Wool Detergent,Air Dry
+C033,Denim,White,Warm,Gentle,Mild,Air Dry
+C034,Wool,Black,Cold,Normal,Wool Detergent,Air Dry
+C035,Denim,Black,Cold,Gentle,Wool Detergent,Air Dry
+C036,Denim,Red,Warm,Normal,Wool Detergent,Air Dry
+C037,Polyester,Black,Warm,Normal,Mild,Tumble
+C038,Cotton,Blue,Warm,Normal,Mild,Tumble
+C039,Polyester,Black,Warm,Hand,Wool Detergent,Tumble
+C040,Wool,Blue,Warm,Gentle,Wool Detergent,Air Dry
+C041,Linen,Blue,Cold,Gentle,Mild,Air Dry
+C042,Cotton,White,Cold,Hand,Mild,Air Dry
+C043,Linen,Blue,Warm,Gentle,Wool Detergent,Air Dry
+C044,Linen,Beige,Warm,Gentle,Wool Detergent,Tumble
+C045,Wool,Grey,Cold,Normal,Mild,Air Dry
+C046,Denim,Grey,Warm,Normal,Mild,Tumble
+C047,Polyester,Black,Warm,Gentle,Wool Detergent,Air Dry
+C048,Cotton,Grey,Warm,Hand,Mild,Tumble
+C049,Wool,Grey,Cold,Normal,Wool Detergent,Air Dry
+C050,Denim,White,Warm,Gentle,Mild,Tumble
+C051,Cotton,White,Cold,Normal,Wool Detergent,Air Dry
+C052,Linen,Black,Cold,Hand,Wool Detergent,Air Dry
+C053,Denim,White,Cold,Normal,Wool Detergent,Air Dry
+C054,Denim,White,Warm,Normal,Mild,Tumble
+C055,Cotton,Beige,Warm,Normal,Mild,Air Dry
+C056,Cotton,Black,Warm,Normal,Mild,Air Dry
+C057,Denim,Beige,Cold,Gentle,Mild,Tumble
+C058,Polyester,Beige,Warm,Gentle,Mild,Air Dry
+C059,Cotton,Black,Warm,Hand,Mild,Air Dry
+C060,Wool,White,Cold,Normal,Mild,Air Dry
+C061,Linen,Red,Cold,Normal,Mild,Air Dry
+C062,Linen,Beige,Warm,Gentle,Mild,Air Dry
+C063,Wool,Beige,Cold,Gentle,Mild,Air Dry
+C064,Wool,White,Cold,Hand,Wool Detergent,Air Dry
+C065,Denim,Beige,Cold,Normal,Mild,Air Dry
+C066,Cotton,Black,Cold,Normal,Mild,Tumble
+C067,Wool,Beige,Cold,Hand,Mild,Air Dry
+C068,Linen,Black,Cold,Gentle,Wool Detergent,Tumble
+C069,Polyester,White,Warm,Hand,Mild,Air Dry
+C070,Cotton,Beige,Warm,Gentle,Wool Detergent,Air Dry
+C071,Cotton,Black,Cold,Normal,Wool Detergent,Tumble
+C072,Denim,Beige,Warm,Hand,Wool Detergent,Air Dry
+C073,Linen,Blue,Cold,Normal,Wool Detergent,Tumble
+C074,Cotton,Beige,Cold,Normal,Mild,Tumble
+C075,Denim,Black,Warm,Hand,Mild,Tumble
+C076,Linen,Black,Cold,Normal,Wool Detergent,Tumble
+C077,Cotton,Black,Cold,Normal,Mild,Tumble
+C078,Cotton,White,Warm,Normal,Mild,Air Dry
+C079,Cotton,Red,Warm,Hand,Wool Detergent,Tumble
+C080,Cotton,Black,Warm,Normal,Wool Detergent,Tumble
+C081,Denim,Black,Cold,Normal,Mild,Tumble
+C082,Cotton,Blue,Warm,Gentle,Wool Detergent,Tumble
+C083,Denim,Red,Cold,Hand,Wool Detergent,Tumble
+C084,Polyester,Red,Warm,Normal,Mild,Tumble
+C085,Linen,Beige,Cold,Normal,Wool Detergent,Tumble
+C086,Denim,Beige,Cold,Gentle,Mild,Air Dry
+C087,Cotton,White,Cold,Gentle,Wool Detergent,Tumble
+C088,Denim,Beige,Warm,Normal,Mild,Air Dry
+C089,Cotton,Blue,Cold,Gentle,Wool Detergent,Air Dry
+C090,Wool,Grey,Warm,Normal,Mild,Tumble
+C091,Linen,White,Warm,Gentle,Mild,Tumble
+C092,Denim,Beige,Warm,Gentle,Wool Detergent,Air Dry
+C093,Polyester,Beige,Cold,Hand,Mild,Air Dry
+C094,Polyester,Grey,Cold,Hand,Wool Detergent,Tumble
+C095,Linen,Grey,Cold,Hand,Wool Detergent,Tumble
+C096,Polyester,Beige,Warm,Hand,Wool Detergent,Tumble
+C097,Linen,Black,Warm,Hand,Wool Detergent,Air Dry
+C098,Cotton,Black,Warm,Gentle,Mild,Tumble
+C099,Polyester,Grey,Cold,Normal,Mild,Tumble
+C100,Denim,White,Cold,Gentle,Wool Detergent,Air Dry
+C101,Wool,Black,Warm,Normal,Wool Detergent,Tumble
+C102,Wool,Black,Warm,Hand,Wool Detergent,Air Dry
+C103,Wool,Red,Cold,Normal,Wool Detergent,Air Dry
+C104,Cotton,Blue,Cold,Gentle,Wool Detergent,Tumble
+C105,Polyester,Black,Cold,Gentle,Wool Detergent,Tumble
+C106,Wool,Grey,Cold,Hand,Wool Detergent,Tumble
+C107,Polyester,White,Cold,Gentle,Wool Detergent,Tumble
+C108,Polyester,Beige,Cold,Gentle,Wool Detergent,Tumble
+C109,Polyester,Beige,Cold,Hand,Mild,Air Dry
+C110,Wool,Beige,Cold,Normal,Mild,Air Dry
+C111,Denim,White,Cold,Normal,Wool Detergent,Tumble
+C112,Wool,Blue,Warm,Gentle,Wool Detergent,Tumble
+C113,Wool,Beige,Warm,Normal,Wool Detergent,Tumble
+C114,Linen,Grey,Warm,Hand,Wool Detergent,Air Dry
+C115,Polyester,Black,Cold,Gentle,Wool Detergent,Tumble
+C116,Wool,Beige,Warm,Hand,Mild,Air Dry
+C117,Denim,Black,Warm,Gentle,Wool Detergent,Air Dry
+C118,Wool,Beige,Cold,Normal,Wool Detergent,Tumble
+C119,Cotton,White,Cold,Hand,Wool Detergent,Air Dry
+C120,Linen,White,Warm,Gentle,Mild,Tumble
+C121,Cotton,Grey,Warm,Gentle,Wool Detergent,Tumble
+C122,Cotton,Red,Warm,Gentle,Mild,Tumble
+C123,Linen,White,Cold,Hand,Mild,Air Dry
+C124,Denim,Red,Warm,Gentle,Wool Detergent,Air Dry
+C125,Wool,Blue,Warm,Gentle,Wool Detergent,Tumble
+C126,Cotton,Beige,Cold,Hand,Mild,Tumble
+C127,Linen,Grey,Cold,Hand,Wool Detergent,Tumble
+C128,Cotton,Red,Warm,Normal,Wool Detergent,Air Dry
+C129,Cotton,White,Warm,Gentle,Mild,Air Dry
+C130,Cotton,White,Warm,Gentle,Mild,Air Dry
+C131,Cotton,White,Cold,Gentle,Wool Detergent,Tumble
+C132,Denim,Beige,Cold,Gentle,Wool Detergent,Tumble
+C133,Wool,Beige,Warm,Normal,Wool Detergent,Tumble
+C134,Polyester,Grey,Cold,Hand,Mild,Tumble
+C135,Polyester,Red,Cold,Normal,Wool Detergent,Air Dry
+C136,Denim,White,Cold,Normal,Wool Detergent,Tumble
+C137,Denim,Red,Cold,Gentle,Wool Detergent,Air Dry
+C138,Linen,White,Cold,Hand,Mild,Tumble
+C139,Wool,Blue,Cold,Normal,Wool Detergent,Tumble
+C140,Cotton,Blue,Warm,Hand,Mild,Air Dry
+C141,Cotton,Black,Cold,Normal,Wool Detergent,Tumble
+C142,Cotton,Red,Warm,Gentle,Mild,Tumble
+C143,Wool,Black,Cold,Normal,Mild,Air Dry
+C144,Linen,Red,Cold,Gentle,Mild,Tumble
+C145,Wool,Grey,Cold,Gentle,Mild,Tumble
+C146,Polyester,Red,Warm,Normal,Wool Detergent,Tumble
+C147,Cotton,Black,Cold,Normal,Mild,Tumble
+C148,Cotton,Red,Cold,Hand,Mild,Tumble
+C149,Cotton,White,Warm,Hand,Wool Detergent,Air Dry
+C150,Denim,Beige,Warm,Hand,Mild,Tumble
+C151,Denim,Blue,Cold,Gentle,Mild,Tumble
+C152,Wool,White,Cold,Hand,Wool Detergent,Tumble
+C153,Wool,Beige,Warm,Normal,Mild,Air Dry
+C154,Wool,Black,Warm,Hand,Wool Detergent,Air Dry
+C155,Denim,Blue,Cold,Hand,Mild,Tumble
+C156,Wool,Beige,Cold,Hand,Wool Detergent,Air Dry
+C157,Linen,Grey,Cold,Normal,Wool Detergent,Tumble
+C158,Linen,Black,Cold,Normal,Mild,Air Dry
+C159,Linen,Black,Cold,Gentle,Wool Detergent,Tumble
+C160,Cotton,Grey,Cold,Hand,Mild,Tumble
+C161,Denim,Blue,Warm,Normal,Wool Detergent,Air Dry
+C162,Linen,Blue,Warm,Hand,Wool Detergent,Air Dry
+C163,Polyester,Black,Warm,Hand,Wool Detergent,Air Dry
+C164,Linen,Blue,Cold,Hand,Mild,Air Dry
+C165,Linen,Blue,Cold,Hand,Wool Detergent,Tumble
+C166,Polyester,Blue,Warm,Gentle,Mild,Tumble
+C167,Wool,Blue,Cold,Normal,Wool Detergent,Tumble
+C168,Linen,Red,Cold,Normal,Mild,Tumble
+C169,Denim,Beige,Warm,Gentle,Mild,Tumble
+C170,Cotton,White,Cold,Normal,Mild,Tumble
+C171,Denim,Blue,Warm,Gentle,Wool Detergent,Tumble
+C172,Denim,Blue,Warm,Normal,Mild,Air Dry
+C173,Polyester,White,Warm,Gentle,Wool Detergent,Tumble
+C174,Polyester,Beige,Warm,Normal,Mild,Tumble
+C175,Polyester,Beige,Warm,Hand,Wool Detergent,Air Dry
+C176,Cotton,Black,Cold,Hand,Mild,Air Dry
+C177,Denim,White,Warm,Normal,Mild,Tumble
+C178,Wool,White,Cold,Gentle,Wool Detergent,Tumble
+C179,Polyester,Blue,Warm,Gentle,Mild,Air Dry
+C180,Cotton,Beige,Cold,Hand,Wool Detergent,Air Dry
+C181,Denim,White,Warm,Hand,Mild,Air Dry
+C182,Linen,Red,Cold,Gentle,Wool Detergent,Tumble
+C183,Polyester,Beige,Warm,Hand,Wool Detergent,Tumble
+C184,Polyester,Beige,Cold,Normal,Wool Detergent,Air Dry
+C185,Linen,Black,Cold,Gentle,Mild,Tumble
+C186,Cotton,Beige,Cold,Hand,Wool Detergent,Tumble
+C187,Linen,Red,Cold,Hand,Wool Detergent,Air Dry
+C188,Cotton,Grey,Cold,Normal,Wool Detergent,Air Dry
+C189,Wool,Beige,Cold,Normal,Mild,Air Dry
+C190,Linen,Beige,Warm,Gentle,Wool Detergent,Tumble
+C191,Polyester,Black,Warm,Normal,Mild,Tumble
+C192,Cotton,White,Warm,Hand,Mild,Air Dry
+C193,Denim,Red,Warm,Gentle,Wool Detergent,Air Dry
+C194,Linen,Black,Warm,Normal,Mild,Tumble
+C195,Denim,White,Cold,Normal,Wool Detergent,Tumble
+C196,Denim,Beige,Warm,Hand,Mild,Air Dry
+C197,Cotton,Red,Cold,Gentle,Wool Detergent,Air Dry
+C198,Wool,Beige,Warm,Hand,Wool Detergent,Air Dry
+C199,Cotton,Red,Warm,Normal,Mild,Air Dry
+C200,Denim,Black,Warm,Gentle,Wool Detergent,Tumble

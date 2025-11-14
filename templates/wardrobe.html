@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}My Wardrobe - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: between; align-items: center; margin-bottom: 2rem;">
+        <h1 style="color: var(--orange);">My Wardrobe</h1>
+        <a href="{{ url_for('upload') }}" class="btn">+ Add New Item</a>
+    </div>
+    
+    {% if clothes %}
+    <div class="clothing-grid">
+        {% for cloth in clothes %}
+        <div class="clothing-item fade-in" id="cloth-{{ cloth.id }}">
+            {% if cloth.image_path %}
+            <img src="{{ url_for('static', filename=cloth.image_path) }}" alt="{{ cloth.cloth_name }}" class="clothing-image"
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMmM1MjgyIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5DbG90aGluZzwvdGV4dD48L3N2Zz4='">
+            {% else %}
+            <div class="clothing-image" style="background: var(--medium-blue); display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3rem;">👕</span>
+            </div>
+            {% endif %}
+            
+            <div class="clothing-info">
+                <div class="clothing-name">{{ cloth.cloth_name }}</div>
+                <div class="clothing-details">
+                    <strong>ID:</strong> {{ cloth.id }}<br>
+                    <strong>Category:</strong> {{ cloth.category }}<br>
+                    <strong>Color:</strong> {{ cloth.color }}<br>
+                    <strong>Fabric:</strong> {{ cloth.fabric_type }}<br>
+                    <strong>Weather:</strong> {{ cloth.weather_conditions }}<br>
+                    <strong>Worn:</strong> <span id="wear-count-{{ cloth.id }}">{{ cloth.wear_count }}</span> times<br>
+                    {% if cloth.last_worn %}
+                    <strong>Last Worn:</strong> <span id="last-worn-{{ cloth.id }}">{{ cloth.last_worn }}</span><br>
+                    {% else %}
+                    <strong>Last Worn:</strong> <span id="last-worn-{{ cloth.id }}">Never</span><br>
+                    {% endif %}
+                </div>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button onclick="markAsWorn({{ cloth.id }})" class="btn" id="mark-btn-{{ cloth.id }}" 
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; transition: all 0.3s ease;">
+                        {% if cloth.last_worn == today %}✅ Worn Today{% else %}✅ Mark as Worn{% endif %}
+                    </button>
+                </div>
+                
+                {% if cloth.care_instructions and cloth.care_instructions != 'Unknown' %}
+                <div style="margin-top: 1rem; padding: 0.8rem; background: rgba(56, 161, 105, 0.2); border-radius: 6px;">
+                    <small><strong>Care Instructions:</strong><br>{{ cloth.care_instructions }}</small>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">👕</div>
+        <h3 style="color: var(--orange); margin-bottom: 1rem;">Your wardrobe is empty!</h3>
+        <p style="margin-bottom: 2rem;">Start by adding your first clothing item to unlock all smart features.</p>
+        <a href="{{ url_for('upload') }}" class="btn">Add Your First Item</a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// Get today's date for comparison
+const today = new Date().toISOString().split('T')[0];
+
+function markAsWorn(clothId) {
+    console.log('Marking cloth as worn:', clothId);
+    
+    const button = document.getElementById(`mark-btn-${clothId}`);
+    const clothItem = document.getElementById(`cloth-${clothId}`);
+    const originalText = button.innerHTML;
+    const originalBg = clothItem.style.backgroundColor;
+    
+    // Show loading state
+    button.innerHTML = '⏳ Updating...';
+    button.disabled = true;
+    
+    // Add temporary visual feedback
+    clothItem.style.backgroundColor = 'rgba(237, 137, 54, 0.1)';
+    clothItem.style.transition = 'all 0.3s ease';
+    
+    fetch('/api/mark_worn', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cloth_id: clothId })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Response:', data);
+        if (data.success) {
+            showNotification(data.message || 'Item marked as worn successfully!', 'success');
+            
+            // Update the UI immediately with visual feedback
+            const wearCountElement = document.getElementById(`wear-count-${clothId}`);
+            const lastWornElement = document.getElementById(`last-worn-${clothId}`);
+            
+            if (wearCountElement) {
+                const currentCount = parseInt(wearCountElement.textContent) || 0;
+                wearCountElement.textContent = currentCount + 1;
+            }
+            
+            if (lastWornElement) {
+                lastWornElement.textContent = data.last_worn || today;
+            }
+            
+            // Visual feedback - turn button red and update text
+            button.innerHTML = '✅ Worn Today';
+            button.style.background = 'linear-gradient(45deg, #e53e3e, #c53030)';
+            button.style.transform = 'scale(1.05)';
+            
+            // Add pulse animation to the entire card
+            clothItem.style.backgroundColor = 'rgba(229, 62, 62, 0.1)';
+            clothItem.style.boxShadow = '0 0 20px rgba(229, 62, 62, 0.3)';
+            
+            // Remove animation after 2 seconds
+            setTimeout(() => {
+                clothItem.style.boxShadow = '';
+                button.style.transform = 'scale(1)';
+            }, 2000);
+            
+            // Update notification badge if exists
+            updateNotificationBadge();
+            
+        } else {
+            showNotification(data.error || 'Error marking item as worn', 'error');
+            button.innerHTML = originalText;
+            button.disabled = false;
+            clothItem.style.backgroundColor = originalBg;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showNotification('Network error marking item as worn', 'error');
+        button.innerHTML = originalText;
+        button.disabled = false;
+        clothItem.style.backgroundColor = originalBg;
+    });
+}
+
+function updateNotificationBadge() {
+    // Update notification badge count
+    const badge = document.querySelector('.notification-badge');
+    if (badge) {
+        const currentCount = parseInt(badge.textContent) || 0;
+        badge.textContent = currentCount + 1;
+        badge.style.display = 'flex';
+    }
+}
+</script>
+
+<style>
+.clothing-item {
+    transition: all 0.3s ease;
+}
+
+.marked-worn {
+    background: rgba(229, 62, 62, 0.1) !important;
+    border: 2px solid #e53e3e !important;
+}
+
+.pulse-animation {
+    animation: pulse 2s ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+</style>
+{% endblock %}

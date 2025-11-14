@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Laundry Tracker - Smart Wardrobe{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1 style="color: var(--orange); margin-bottom: 2rem;">Smart Laundry Tracker</h1>
+    
+    <div style="background: rgba(56, 161, 105, 0.2); padding: 1.5rem; border-radius: 8px; margin-bottom: 2rem;">
+        <h4 style="color: var(--green); margin-bottom: 1rem;">🧠 AI-Powered Wash Predictions</h4>
+        <p>Using advanced AI to analyze fabric type, usage patterns, care instructions, and environmental factors to predict optimal wash times.</p>
+    </div>
+    
+    {% if recommendations %}
+    <div class="grid grid-3">
+        <!-- High Priority -->
+        <div class="fade-in">
+            <h3 style="color: #e53e3e; margin-bottom: 1rem;">🚨 High Priority</h3>
+            {% for rec in recommendations if rec.wash_priority == 'High' %}
+            <div style="background: rgba(229, 62, 62, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: between; align-items: start;">
+                    <div style="flex: 1;">
+                        <strong>{{ rec.cloth_name }}</strong>
+                        <br>
+                        <small>Fabric: {{ rec.fabric_type }}</small>
+                        <br>
+                        <small>Worn: {{ rec.wear_count }} times</small>
+                        <br>
+                        <!-- <small>Days since worn: {{ rec.days_since_worn }}</small> -->
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                    <small><strong>🤖 AI Recommendation:</strong> Wash NOW</small>
+                    <br>
+                    <small><strong>Reason:</strong> {{ rec.priority_reason }}</small>
+                </div>
+                {% if rec.care_instructions and rec.care_instructions != 'Unknown' %}
+                <div style="margin-top: 0.5rem;">
+                    <small><strong>Care Instructions:</strong> {{ rec.care_instructions }}</small>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <p style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                No high priority items! 🎉
+            </p>
+            {% endfor %}
+        </div>
+        
+        <!-- Medium Priority -->
+        <div class="fade-in">
+            <h3 style="color: var(--light-blue); margin-bottom: 1rem;">⚠️ Medium Priority</h3>
+            {% for rec in recommendations if rec.wash_priority == 'Medium' %}
+            <div style="background: rgba(49, 130, 206, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: between; align-items: start;">
+                    <div style="flex: 1;">
+                        <strong>{{ rec.cloth_name }}</strong>
+                        <br>
+                        <small>Fabric: {{ rec.fabric_type }}</small>
+                        <br>
+                        <small>Worn: {{ rec.wear_count }} times</small>
+                        <br>
+                        <!-- <small>Days since worn: {{ rec.days_since_worn }}</small> -->
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                    <small><strong>🤖 AI Recommendation:</strong> Wash in {{ rec.predicted_wash_days - rec.days_since_worn }} days</small>
+                    <br>
+                    <small><strong>Reason:</strong> {{ rec.priority_reason }}</small>
+                </div>
+                {% if rec.care_instructions and rec.care_instructions != 'Unknown' %}
+                <div style="margin-top: 0.5rem;">
+                    <small><strong>Care Instructions:</strong> {{ rec.care_instructions }}</small>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <p style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                No medium priority items! 👍
+            </p>
+            {% endfor %}
+        </div>
+        
+        <!-- Low Priority -->
+        <div class="fade-in">
+            <h3 style="color: var(--green); margin-bottom: 1rem;">✅ Low Priority</h3>
+            {% for rec in recommendations if rec.wash_priority == 'Low' %}
+            <div style="background: rgba(56, 161, 105, 0.2); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: between; align-items: start;">
+                    <div style="flex: 1;">
+                        <strong>{{ rec.cloth_name }}</strong>
+                        <br>
+                        <small>Fabric: {{ rec.fabric_type }}</small>
+                        <br>
+                        <small>Worn: {{ rec.wear_count }} times</small>
+                        <br>
+                        <!-- <small>Days since worn: {{ rec.days_since_worn }}</small> -->
+                    </div>
+                </div>
+                <div style="margin-top: 0.5rem; padding: 0.5rem; background: rgba(255,255,255,0.1); border-radius: 5px;">
+                    <small><strong>🤖 AI Recommendation:</strong> Wash in {{ rec.predicted_wash_days }} days</small>
+                    <br>
+                    <small><strong>Reason:</strong> {{ rec.priority_reason }}</small>
+                </div>
+                {% if rec.care_instructions and rec.care_instructions != 'Unknown' %}
+                <div style="margin-top: 0.5rem;">
+                    <small><strong>Care Instructions:</strong> {{ rec.care_instructions }}</small>
+                </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <p style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.1); border-radius: 8px;">
+                No low priority items! 🌟
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(237, 137, 54, 0.2); border-radius: 8px;">
+        <h4 style="color: var(--orange); margin-bottom: 1rem;">🤖 How AI Wash Prediction Works</h4>
+        <p>The AI analyzes multiple factors to provide personalized wash recommendations:</p>
+        <div class="grid grid-2" style="margin-top: 1rem;">
+            <div>
+                <strong>📊 Factors Considered:</strong>
+                <ul>
+                    <li>Fabric type and durability</li>
+                    <li>Usage frequency and patterns</li>
+                    <li>Care label requirements</li>
+                    <li>Environmental conditions</li>
+                    <li>Hygiene standards</li>
+                </ul>
+            </div>
+            <div>
+                <strong>🎯 Benefits:</strong>
+                <ul>
+                    <li>Extends clothing lifespan</li>
+                    <li>Saves water and energy</li>
+                    <li>Maintains fabric quality</li>
+                    <li>Prevents overwashing</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div style="text-align: center; padding: 3rem;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🎉</div>
+        <h3 style="color: var(--green); margin-bottom: 1rem;">All caught up on laundry!</h3>
+        <p>Your wardrobe is fresh and ready to wear. Check back later for laundry recommendations.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
